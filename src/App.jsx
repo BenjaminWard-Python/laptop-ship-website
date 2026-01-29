@@ -1,10 +1,47 @@
 import React, { useState } from 'react';
-import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 export default function SaaSWebsiteTemplate() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [signInEmail, setSignInEmail] = useState('');
+  const [signInPassword, setSignInPassword] = useState('');
+  const [signInError, setSignInError] = useState('');
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    setSignInError('');
+
+    // Validate email
+    if (!signInEmail) {
+      setSignInError('Please enter your email address');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(signInEmail)) {
+      setSignInError('Please enter a valid email address');
+      return;
+    }
+
+    // Validate password
+    if (!signInPassword) {
+      setSignInError('Please enter your password');
+      return;
+    }
+
+    // Simulate email/password verification (replace with actual API call)
+    // For demo purposes, this will show an error
+    setSignInError('Invalid email or password. Please check your credentials and try again.');
+  };
 
   const handleTabChange = (tabId) => {
     if (tabId !== activeTab) {
@@ -17,7 +54,6 @@ export default function SaaSWebsiteTemplate() {
   };
 
   const navigation = [
-    { name: 'Solutions', id: 'solutions' },
     { name: 'Features', id: 'features' },
     { name: 'Pricing', id: 'pricing' },
     { name: 'About', id: 'about' },
@@ -31,88 +67,73 @@ export default function SaaSWebsiteTemplate() {
     switch(activeTab) {
       case 'home':
         return (
-          <div className={`space-y-24 ${fadeInClass} ${transitionClass}`}>
-            {/* Hero Section */}
-            <section className="text-center max-w-4xl mx-auto pt-20 pb-16">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                Transform Your Business Operations
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Streamline workflows, enhance productivity, and scale your business with our comprehensive platform solution.
-              </p>
-              <div className="flex gap-4 justify-center flex-wrap">
-                <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-all flex items-center gap-2">
-                  Get Started <ArrowRight className="w-4 h-4" />
-                </button>
-                <button className="border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 hover:border-gray-500 transition-all">
-                  Watch Demo
-                </button>
-              </div>
-            </section>
-
-            {/* Features Grid */}
-            <section className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg mb-4"></div>
-                    <h3 className="text-xl font-semibold mb-2">Feature {i}</h3>
-                    <p className="text-gray-600">
-                      Powerful functionality designed to help your team work smarter and faster.
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* CTA Section */}
-            <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-2xl p-12 text-center max-w-5xl mx-auto">
-              <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-              <p className="text-xl mb-8 opacity-90">
-                Join thousands of companies already using our platform.
-              </p>
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
-                Let us handle it
-              </button>
-            </section>
-          </div>
-        );
-      
-      case 'solutions':
-        return (
-          <div className={`space-y-16 ${fadeInClass} ${transitionClass}`}>
-            <section className="text-center max-w-3xl mx-auto pt-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Solutions for Every Need
-              </h1>
-              <p className="text-lg text-gray-600">
-                Tailored solutions designed to meet the unique challenges of your industry.
+          <div className={`${fadeInClass} ${transitionClass}`}>
+            {/* Main Value Prop */}
+            <section className="max-w-6xl mx-auto py-20 text-center px-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Section Title: Main Value Proposition
+              </h2>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                Supporting description text that explains the main benefits and how the service works.
               </p>
             </section>
 
-            <section className="max-w-5xl mx-auto space-y-12">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex flex-col md:flex-row gap-8 items-center bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-                  <div className="w-full md:w-1/3 h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg"></div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-3">Solution {i}</h3>
-                    <p className="text-gray-600 mb-4">
-                      Comprehensive approach to solving complex business challenges with innovative technology and proven methodologies.
-                    </p>
-                    <button className="text-blue-600 font-semibold hover:text-blue-800 flex items-center gap-1 transition-all">
-                      Learn More <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
+            {/* Feature Section 1 */}
+            <section className="max-w-6xl mx-auto py-12 px-4">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Hassle Free Retrieval
+                  </h3>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Description of this feature and how it benefits the customer. Explain the value proposition clearly.
+                  </p>
                 </div>
-              ))}
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl h-80 flex items-center justify-center">
+                  <span className="text-gray-400">Feature Image 1</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Feature Section 2 */}
+            <section className="max-w-6xl mx-auto py-12 px-4">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="order-2 md:order-1 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl h-80 flex items-center justify-center">
+                  <span className="text-gray-400">Feature Image 2</span>
+                </div>
+                <div className="order-1 md:order-2">
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Cheaper & Easier
+                  </h3>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Description of this feature and how it benefits the customer. Explain the value proposition clearly.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Feature Section 3 */}
+            <section className="max-w-6xl mx-auto py-12 px-4">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    End-to-end Visibility
+                  </h3>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Description of this feature and how it benefits the customer. Explain the value proposition clearly.
+                  </p>
+                </div>
+                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl h-80 flex items-center justify-center">
+                  <span className="text-gray-400">Feature Image 3</span>
+                </div>
+              </div>
             </section>
           </div>
         );
       
       case 'features':
         return (
-          <div className={`space-y-16 ${fadeInClass} ${transitionClass}`}>
+          <div className={`space-y-16 ${fadeInClass} ${transitionClass} pb-20`}>
             <section className="text-center max-w-3xl mx-auto pt-12">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 Everything You Need
@@ -138,7 +159,7 @@ export default function SaaSWebsiteTemplate() {
       
       case 'pricing':
         return (
-          <div className={`space-y-16 ${fadeInClass} ${transitionClass}`}>
+          <div className={`space-y-16 ${fadeInClass} ${transitionClass} pb-20`}>
             <section className="text-center max-w-3xl mx-auto pt-12">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 Start Your Process
@@ -257,70 +278,16 @@ export default function SaaSWebsiteTemplate() {
                   Get Started
                 </button>
               </div>
+
             </section>
 
-            {/* Enterprise Pricing Table */}
-            <section className="max-w-6xl mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">Enterprise Pricing & Billing</h2>
-                <p className="text-gray-600">
-                  Our Enterprise plan is designed to offer maximum flexibility and cost efficiency for businesses handling multiple operations.
-                </p>
-                <p className="text-gray-700 font-semibold mt-4">
-                  We have a minimum of 10 prepaid operations to open your Enterprise account.
-                </p>
-                <p className="text-gray-600">
-                  Prepay for a batch of 10 - 250+ operations at the following rates:
-                </p>
-              </div>
 
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-blue-600 text-white">
-                      <tr>
-                        <th className="px-6 py-4 text-left text-sm font-semibold">Service A</th>
-                        <th className="px-6 py-4 text-left text-sm font-semibold">Service B</th>
-                        <th className="px-6 py-4 text-left text-sm font-semibold">Service C</th>
-                        <th className="px-6 py-4 text-left text-sm font-semibold">Service D</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      <tr className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-gray-900 font-medium">10 or more</td>
-                        <td className="px-6 py-4 text-gray-700">$XX/use</td>
-                        <td className="px-6 py-4 text-gray-700">$XX/use</td>
-                        <td className="px-6 py-4 text-gray-700">$XX/use</td>
-                      </tr>
-                      <tr className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-gray-900 font-medium">50 or more</td>
-                        <td className="px-6 py-4 text-gray-700">$XX/use</td>
-                        <td className="px-6 py-4 text-gray-700">$XX/use</td>
-                        <td className="px-6 py-4 text-gray-700">$XX/use</td>
-                      </tr>
-                      <tr className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-gray-900 font-medium">250 or more</td>
-                        <td className="px-6 py-4 text-gray-700">$XX/use</td>
-                        <td className="px-6 py-4 text-gray-700">-</td>
-                        <td className="px-6 py-4 text-gray-700">-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="text-center mt-8">
-                <a href="#" className="text-blue-600 font-semibold hover:text-blue-800 transition-all inline-flex items-center gap-2">
-                  Learn more about our Enterprise solutions <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-            </section>
           </div>
         );
       
       case 'about':
         return (
-          <div className={`space-y-16 ${fadeInClass} ${transitionClass}`}>
+          <div className={`space-y-16 ${fadeInClass} ${transitionClass} pb-20`}>
             <section className="text-center max-w-3xl mx-auto pt-12">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 About Our Company
@@ -362,7 +329,7 @@ export default function SaaSWebsiteTemplate() {
       
       case 'contact':
         return (
-          <div className={`space-y-16 ${fadeInClass} ${transitionClass}`}>
+          <div className={`space-y-16 ${fadeInClass} ${transitionClass} pb-20`}>
             <section className="text-center max-w-3xl mx-auto pt-12">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 Get In Touch
@@ -400,27 +367,56 @@ export default function SaaSWebsiteTemplate() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+        
+        .animate-slideUp {
+          animation: slideUp 0.4s ease-out;
+        }
+      `}</style>
       {/* Navigation */}
       <nav className="bg-blue-600 border-b border-blue-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
+          <div className="flex items-center h-20 relative">
+            {/* Logo - Always on the left */}
             <button 
               onClick={() => handleTabChange('home')}
-              className="flex items-center hover:opacity-80 transition-all"
+              className="flex items-center hover:opacity-80 transition-all absolute left-0"
             >
-              <div className="w-10 h-10 bg-white rounded-lg"></div>
-              <span className="ml-3 text-xl font-bold text-white">Company</span>
+              <div className="w-12 h-12 bg-white rounded-lg"></div>
+              <span className="ml-3 text-2xl font-bold text-white">Laptop Ship</span>
             </button>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            {/* Desktop Navigation - Centered */}
+            <div className="hidden md:flex items-center space-x-10 mx-auto">
               {navigation.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => handleTabChange(item.id)}
-                  className={`text-sm font-medium transition-all ${
+                  className={`text-lg font-semibold transition-all ${
                     activeTab === item.id
                       ? 'text-white font-bold'
                       : 'text-blue-100 hover:text-white'
@@ -431,8 +427,21 @@ export default function SaaSWebsiteTemplate() {
               ))}
             </div>
 
-            {/* Spacer for balance */}
-            <div className="hidden md:block w-32"></div>
+            {/* Auth Buttons - Desktop */}
+            <div className="hidden md:flex items-center space-x-4 absolute right-0">
+              <button 
+                onClick={() => setShowSignIn(true)}
+                className="border-2 border-white text-white px-7 py-2.5 rounded-full text-base font-semibold hover:bg-white hover:text-blue-600 transition-all"
+              >
+                Log in
+              </button>
+              <button 
+                onClick={() => handleTabChange('home')}
+                className="bg-blue-500 text-white px-7 py-2.5 rounded-full text-base font-semibold hover:bg-blue-400 transition-all"
+              >
+                Get Started
+              </button>
+            </div>
 
             {/* Mobile menu button */}
             <button
@@ -464,8 +473,23 @@ export default function SaaSWebsiteTemplate() {
                   {item.name}
                 </button>
               ))}
-              <button className="w-full bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-blue-800 transition-all">
-                Sign In
+              <button 
+                onClick={() => {
+                  setShowSignIn(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-blue-800 transition-all"
+              >
+                Log In
+              </button>
+              <button 
+                onClick={() => {
+                  handleTabChange('home');
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-blue-400 transition-all"
+              >
+                Get Started
               </button>
             </div>
           </div>
@@ -473,37 +497,342 @@ export default function SaaSWebsiteTemplate() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {renderContent()}
+      <main className="relative">
+        {/* White background for hero */}
+        <div className="bg-white">
+          {activeTab === 'home' && (
+            <div className={`${isAnimating ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'} transition-all duration-500 ease-out`}>
+              {/* Hero Section - Full Screen */}
+              <section className="min-h-[95vh] flex items-center pt-40 pb-60">
+                <div className="grid md:grid-cols-2 gap-40 items-center max-w-7xl mx-auto px-1 w-full">
+                  <div className="pl-8">
+                    <h1 className="text-7xl md:text-8xl font-bold text-gray-900 mb-12 leading-tight">
+                      Automate recovering your devices.
+                    </h1>
+                    <p className="text-3xl md:text-4xl text-gray-700 mb-16 leading-relaxed">
+                      We bring your devices safely back aboard
+                    </p>
+                    <button className="bg-blue-600 text-white px-16 py-6 rounded-full font-semibold hover:bg-blue-700 transition-all text-3xl uppercase tracking-wide shadow-lg hover:shadow-xl">
+                      GET STARTED
+                    </button>
+                  </div>
+                  
+                  {/* Hero Image Placeholder */}
+                  <div className="relative pr-8">
+                    <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl h-[550px] md:h-[600px] flex items-center justify-center shadow-lg">
+                      <div className="text-gray-400 text-lg">Hero Illustration</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          )}
+        </div>
+        
+        {/* Light blue background for rest of content */}
+        <div className="bg-blue-50">
+          {renderContent()}
+        
+          {/* CTA section */}
+          {activeTab === 'home' && (
+            <section className="max-w-5xl mx-auto py-20 px-4">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-2xl p-16 text-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Ready to Get Started?
+                </h2>
+                <p className="text-xl mb-10 opacity-90 max-w-3xl mx-auto leading-relaxed">
+                  Final call-to-action message encouraging users to take the next step.
+                </p>
+                <button className="bg-white text-blue-600 px-10 py-4 rounded-full font-semibold hover:bg-gray-50 transition-all text-lg shadow-lg">
+                  GET STARTED
+                </button>
+              </div>
+            </section>
+          )}
+        </div>
       </main>
 
+      {/* Sign In Modal */}
+      {showSignIn && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 animate-fadeIn" 
+          onClick={() => {
+            setShowSignIn(false);
+            setSignInError('');
+            setSignInEmail('');
+            setSignInPassword('');
+          }}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-slideUp" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => {
+                setShowSignIn(false);
+                setSignInError('');
+                setSignInEmail('');
+                setSignInPassword('');
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h2>
+              <p className="text-gray-600">Sign in to your account to continue</p>
+            </div>
+
+            {signInError && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 animate-slideUp">
+                <div className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-bold mt-0.5">
+                  !
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-red-900 mb-1">Sign In Error</p>
+                  <p className="text-sm text-red-700">{signInError}</p>
+                </div>
+                <button 
+                  onClick={() => setSignInError('')}
+                  className="flex-shrink-0 text-red-400 hover:text-red-600 transition"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+
+            <form onSubmit={handleSignIn} className="space-y-5">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                <input 
+                  type="email"
+                  value={signInEmail}
+                  onChange={(e) => setSignInEmail(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" 
+                  placeholder="you@example.com"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                <input 
+                  type="password"
+                  value={signInPassword}
+                  onChange={(e) => setSignInPassword(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" 
+                  placeholder="Enter your password"
+                />
+              </div>
+
+              <div className="flex items-center justify-between text-sm">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-600" />
+                  <span className="text-gray-600">Remember me</span>
+                </label>
+                <a href="#" className="text-blue-600 font-semibold hover:text-blue-800 transition">Forgot password?</a>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
+              >
+                Sign In
+              </button>
+
+              <div className="text-center text-sm text-gray-600">
+                Don't have an account? 
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setShowSignIn(false);
+                    setShowSignUp(true);
+                    setSignInError('');
+                    setSignInEmail('');
+                    setSignInPassword('');
+                  }}
+                  className="text-blue-600 font-semibold hover:text-blue-800 transition ml-1"
+                >
+                  Create one
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Sign Up Modal */}
+      {showSignUp && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 animate-fadeIn" 
+          onClick={() => setShowSignUp(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-slideUp" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setShowSignUp(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Create account</h2>
+              <p className="text-gray-600">Get started with Laptop Ship today</p>
+            </div>
+
+            <div className="space-y-5">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                <input 
+                  type="text" 
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" 
+                  placeholder="John Doe"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                <input 
+                  type="email" 
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" 
+                  placeholder="you@example.com"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                <div className="relative">
+                  <input 
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" 
+                    placeholder="Create a password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Confirm Password</label>
+                <div className="relative">
+                  <input 
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className={`w-full px-4 py-3 pr-12 border rounded-lg focus:outline-none focus:ring-2 transition ${
+                      confirmPassword && password !== confirmPassword 
+                        ? 'border-red-500 focus:ring-red-600' 
+                        : 'border-gray-300 focus:ring-blue-600 focus:border-transparent'
+                    }`}
+                    placeholder="Confirm your password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+                {confirmPassword && password !== confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1">Passwords do not match</p>
+                )}
+              </div>
+
+              <div className="text-xs text-gray-600">
+                By creating an account, you agree to our 
+                <a href="#" className="text-blue-600 hover:text-blue-800 transition ml-1">Terms of Service</a> and 
+                <a href="#" className="text-blue-600 hover:text-blue-800 transition ml-1">Privacy Policy</a>
+              </div>
+
+              <button 
+                disabled={!password || password !== confirmPassword}
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600"
+              >
+                Create Account
+              </button>
+
+              <div className="text-center text-sm text-gray-600">
+                Already have an account? 
+                <button 
+                  onClick={() => {
+                    setShowSignUp(false);
+                    setShowSignIn(true);
+                  }}
+                  className="text-blue-600 font-semibold hover:text-blue-800 transition ml-1"
+                >
+                  Sign in
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
-      <footer className="bg-gray-900 text-white mt-24">
+      <footer className="bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
+          <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
+            {/* Logo and Description */}
+            <div className="max-w-md">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 bg-blue-600 rounded"></div>
-                <span className="ml-2 font-bold">Company</span>
+                <span className="ml-2 font-bold text-lg">Laptop Ship</span>
               </div>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-400 text-sm leading-relaxed">
                 Building the future of business operations.
               </p>
             </div>
-            {['Product', 'Company', 'Resources'].map((section) => (
-              <div key={section}>
-                <h3 className="font-semibold mb-4">{section}</h3>
+
+            {/* Links - Horizontal Layout */}
+            <div className="flex flex-wrap gap-12">
+              {/* Product Links */}
+              <div>
+                <h3 className="font-semibold mb-4 text-base">Product</h3>
                 <ul className="space-y-2 text-sm text-gray-400">
-                  <li><a href="#" className="hover:text-white transition">Link One</a></li>
-                  <li><a href="#" className="hover:text-white transition">Link Two</a></li>
-                  <li><a href="#" className="hover:text-white transition">Link Three</a></li>
-                  <li><a href="#" className="hover:text-white transition">Link Four</a></li>
+                  <li><a href="#" className="hover:text-white transition">Features</a></li>
+                  <li><a href="#" className="hover:text-white transition">Pricing</a></li>
                 </ul>
               </div>
-            ))}
+
+              {/* Company Links */}
+              <div>
+                <h3 className="font-semibold mb-4 text-base">Company</h3>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li><a href="#" className="hover:text-white transition">About</a></li>
+                  <li><a href="#" className="hover:text-white transition">Contact</a></li>
+                </ul>
+              </div>
+
+              {/* Resources Links */}
+              <div>
+                <h3 className="font-semibold mb-4 text-base">Resources</h3>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li><a href="#" className="hover:text-white transition">Support</a></li>
+                  <li><a href="#" className="hover:text-white transition">API</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2026 Company Name. All rights reserved.</p>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-gray-800 pt-6">
+            <div className="text-center text-sm text-gray-400">
+              <p>© 2026 Laptop Ship. All rights reserved.</p>
+              <p className="mt-2">
+                <a href="#" className="hover:text-white transition">Terms & Privacy</a>
+              </p>
+            </div>
           </div>
         </div>
       </footer>
